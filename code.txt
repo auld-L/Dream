@@ -1,0 +1,1 @@
+find /media/auld/lhw/iran/ps -type f -name "*.zip" > orbit.txt           用于查找绝对路径，下载轨道数据用的
