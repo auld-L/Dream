@@ -21,7 +21,8 @@ plot_lims=[-0.4,0.4];
 %Load InSAR
 lon=double(insar.Lon);
 lat=double(insar.Lat);
-los=double(insar.Phase);
+%los=double(insar.Phase);
+los=double(insar.los);
 inc=mean(insar.Inc);
 fprintf('mean inc = %g \n',inc);
 
