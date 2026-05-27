@@ -5,3 +5,4 @@ quer_gbis2sdm是把gbis四叉树降采样结果输出保存成sdm的输入格式
 fault_line是根据反演出来的参数，加进去自己假设的断层长度求出来的断层两端经纬度  
 
 new_version文件夹是画图脚本新版本，可以直接使用新的就可以了，还添加了画置信区间的脚本
+<img width="1087" height="401" alt="image" src="https://github.com/user-attachments/assets/1569897a-66d7-4185-8aba-9bb5cb4eaefa" />
