@@ -1,9 +1,33 @@
 #!/bin/csh -f
 # make_offset_mt.csh Master.PRM Aligned.PRM nx ny xsearch ysearch do_xcorr [nproc]
 
+# Script to drive the xcorr to do the azimuthal pixel-tracking
+# Originated by Matt Wei, April 19, 2010
+# Rewrote by Kang Wang
+# Last update: Aug. 09, 2013
+#
+# Revised by Xiaohua Xu, Nov 15, 2013: adding some pre_proc, redefined some parameters, add blockmedian,
+# add shaded part, delete some redundant lines, easier to use
+#
+# Revised by David Sandwell, Dec 28, 2018: corrected azi pixel size using ground velocity and added more comments
+#
+# Revised by Hongwei Liang, September 25, 2026: Modified to use CPU parallelism and added progress printing, referencing Wang Xin's script.
+#
+#
 if ($#argv < 7 || $#argv > 8) then
-  echo "Usage: make_offset_mt.csh Master.PRM Aligned.PRM nx ny xsearch ysearch do_xcorr [nproc]"
-  exit 1
+   echo ""
+   echo "Usage: make_offset_mt.csh Master.PRM Aligned.PRM nx ny xsearch ysearch do_xcorr [nproc] "
+   echo ""
+   echo "       nx - number of offsets to compute in the range direction (~num_rng/4)  "
+   echo "       ny - number of offsets to compute in the azimuth direction (~num_az/6)  "
+   echo "       xsearch - size of correlation window in range (int power of 2 [32 64 128 256]; e.g., 16) "
+   echo "       ysearch - size of correlation window in azimuth (int power of 2 [32 64 128 256]; e.g., 16) "
+   echo "       do_xcorr - 1-recalculate xcorr; 0-use results from previous xcorr"
+   echo "       nproc    CPU workers (optional); The default is 32."
+   echo ""
+   echo ""
+   echo ""
+   exit 1
 endif
 
 echo "make_offset_mt.csh" $1 $2 $3 $4 $5 $6 $7 $8
@@ -70,7 +94,7 @@ while kill -0 $pid 2>/dev/null; do
   n=$(cat freq_xcorr.dat freq_xcorr.dat.part.* 2>/dev/null | wc -l)
   awk -v n="$n" -v t="$8" -v p="$7" -v d="$(date '+%F %T')" \
     'BEGIN{if(n>t)n=t; printf "%s  %.2f%%  %d/%d  nproc=%s\n", d, 100*n/t, n, t, p}'
-  sleep 10
+  sleep 30
 done
 wait $pid || true
 elapsed=$(awk '/elapsed time/{print $NF; exit}' xcorr_mt.log)
