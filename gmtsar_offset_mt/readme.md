@@ -30,4 +30,4 @@ bash offset_filter.sh 10 6 2：进行后处理滤波
 
 
 
-有问题可以邮箱联系：lianghw@ies.ac.cn
+有问题可以发邮件：lianghw@ies.ac.cn
